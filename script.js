@@ -3,7 +3,25 @@ const envelope = document.getElementById("envelope");
 const btn = document.getElementById("openBtn");
 
 btn.addEventListener("click", () => {
+
   envelope.classList.toggle("open");
+
+  if (envelope.classList.contains("open")) {
+    btn.textContent = "Cerrar Carta 💌";
+  } else {
+    btn.textContent = "Abrir Carta ❤️";
+
+    // Reiniciar las páginas al cerrar
+    messages.forEach(msg => {
+      msg.classList.remove("active", "exit-left");
+    });
+    current = 0;
+    messages[current].classList.add("active");
+
+    // Mostrar botón de siguiente
+    nextBtn.style.display = "inline-block";
+    nextBtn.textContent = "Siguiente ❤️";
+  }
 });
 
 const messages = document.querySelectorAll(".message");
@@ -27,17 +45,6 @@ nextBtn.addEventListener("click", () => {
     current++;
     messages[current].classList.add("active");
     updateButton();
-  }
-});
-
-// Reiniciar cuando se cierra la carta
-btn.addEventListener("click", () => {
-  if (!envelope.classList.contains("open")) {
-    messages[current].classList.remove("active");
-    current = 0;
-    messages[current].classList.add("active");
-    nextBtn.style.display = "inline-block";
-    nextBtn.textContent = "Siguiente ❤️";
   }
 });
 
